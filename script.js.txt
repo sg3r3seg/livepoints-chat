@@ -1,0 +1,81 @@
+let users = [];
+let currentUser = null;
+
+function refreshUI() {
+  if(currentUser){
+    document.getElementById('authForms').style.display='none';
+    document.getElementById('meInfo').style.display='';
+    document.getElementById('liveArea').style.display='';
+    document.getElementById('chatSim').style.display='';
+    document.getElementById('raffleCard').style.display='';
+    document.getElementById('meName').innerText=currentUser.name;
+    document.getElementById('mePoints').innerText=currentUser.points;
+    document.getElementById('liveUrl').value=currentUser.liveUrl || '';
+  } else {
+    document.getElementById('authForms').style.display='';
+    document.getElementById('meInfo').style.display='none';
+    document.getElementById('liveArea').style.display='none';
+    document.getElementById('chatSim').style.display='none';
+    document.getElementById('raffleCard').style.display='none';
+  }
+}
+
+document.getElementById('doRegister').addEventListener('click', ()=>{
+  const email=document.getElementById('regEmail').value.trim();
+  const pass=document.getElementById('regPassword').value.trim();
+  const name=document.getElementById('regName').value.trim() || email.split('@')[0];
+  if(!email || !pass) return alert('מלאו אימייל וסיסמה');
+  if(users.find(u=>u.email===email)) return alert('אימייל כבר רשום');
+  const user={email,password:pass,name,points:0,liveUrl:''};
+  users.push(user);
+  currentUser=user;
+  alert('נרשמת בהצלחה!');
+  refreshUI();
+});
+
+document.getElementById('doLogin').addEventListener('click', ()=>{
+  const email=document.getElementById('loginEmail').value.trim();
+  const pass=document.getElementById('loginPassword').value.trim();
+  const user=users.find(u=>u.email===email && u.password===pass);
+  if(!user) return alert('אימייל או סיסמה שגויים');
+  currentUser=user;
+  alert('מחובר בהצלחה!');
+  refreshUI();
+});
+
+document.getElementById('doLogout').addEventListener('click', ()=>{
+  currentUser=null;
+  refreshUI();
+});
+
+document.getElementById('saveLive').addEventListener('click', ()=>{
+  const url=document.getElementById('liveUrl').value.trim();
+  if(!url) return alert('הכנס לינק');
+  currentUser.liveUrl=url;
+  document.getElementById('liveInfo').innerText='לינק נשמר בהצלחה!';
+  refreshUI();
+});
+
+document.getElementById('sendChat').addEventListener('click', ()=>{
+  const msg=document.getElementById('chatMsg').value.trim();
+  if(!msg) return alert('כתוב הודעה');
+  const basePoints=5;
+  const bonus=Math.min(10,Math.floor(msg.length/10));
+  const total=basePoints+bonus;
+  currentUser.points+=total;
+  document.getElementById('res').innerText=`שלחת הודעה! הרווחת ${total} נקודות. סה"כ: ${currentUser.points}`;
+  document.getElementById('mePoints').innerText=currentUser.points;
+  document.getElementById('chatMsg').value='';
+});
+
+document.getElementById('checkPoints').addEventListener('click', ()=>{
+  document.getElementById('res').innerText=`נקודות נוכחיות: ${currentUser.points}`;
+});
+
+document.getElementById('runRaffle').addEventListener('click', ()=>{
+  if(users.length===0) return alert('אין משתמשים להגרלה');
+  const winner = users[Math.floor(Math.random()*users.length)];
+  document.getElementById('raffleRes').innerText=`המנצח בהגרלה: ${winner.name}`;
+});
+
+refreshUI();

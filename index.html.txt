@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>השועל הלבן — Live Points & Chat System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="logo-bg"><img src="logo.png" alt="Logo"></div>
+
+<div class="container">
+  <h1>השועל הלבן 🦊</h1>
+  <h2>Live Points & Chat System</h2>
+
+  <div id="authArea" class="card">
+    <div id="authForms">
+      <h3>הרשמה</h3>
+      <input id="regEmail" placeholder="אימייל">
+      <input id="regPassword" type="password" placeholder="סיסמה">
+      <input id="regName" placeholder="שם תצוגה (אופציונלי)">
+      <button id="doRegister">הרשם</button>
+      <hr>
+      <h3>התחברות</h3>
+      <input id="loginEmail" placeholder="אימייל">
+      <input id="loginPassword" type="password" placeholder="סיסמה">
+      <button id="doLogin">התחבר</button>
+    </div>
+
+    <div id="meInfo" style="display:none">
+      <p>שלום, <span id="meName"></span></p>
+      <p>נקודות: <strong id="mePoints">0</strong></p>
+      <button id="doLogout">יציאה</button>
+    </div>
+  </div>
+
+  <div id="liveArea" class="card" style="display:none">
+    <h3>קישור לייב</h3>
+    <input id="liveUrl" placeholder="https://www.youtube.com/watch?v=...">
+    <button id="saveLive">שמור לינק</button>
+    <div id="liveInfo" style="margin-top:12px"></div>
+  </div>
+
+  <div id="chatSim" class="card" style="display:none">
+    <h3>שלח הודעה</h3>
+    <input id="chatMsg" placeholder="הודעה...">
+    <button id="sendChat">שלח הודעה</button>
+    <button id="checkPoints">בדוק נקודות</button>
+    <div id="res" style="margin-top:10px"></div>
+  </div>
+
+  <div id="raffleCard" class="card" style="display:none">
+    <h3>הגרלה אקראית</h3>
+    <button id="runRaffle">בצע הגרלה</button>
+    <div id="raffleRes" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script src="backup.js"></script>
+</body>
+</html>
